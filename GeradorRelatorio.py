@@ -508,7 +508,7 @@ if file_prod and file_ret:
                 if USAR_META_M2:
                     fig_m2.add_hline(y=META_ABSOLUTA_M2, line_dash="dash", line_color="black", annotation_text=f"Meta: {META_ABSOLUTA_M2} m²")
                 
-                fig_m2.update_layout(title=f"Volume Retido (m²)", xaxis_title="Equipe", template=TEMPLATE_GRAFICO)
+                fig_m2.update_layout(title=f"Linha 4 / Linha 5", xaxis_title="Equipe", template=TEMPLATE_GRAFICO)
                 st.plotly_chart(fig_m2, use_container_width=True)
 
             # 2. Gráfico Frequência por Equipe
@@ -527,7 +527,7 @@ if file_prod and file_ret:
                 if USAR_META_FREQ:
                     fig_count.add_hline(y=META_FREQ_QTD, line_dash="dash", line_color="black", annotation_text=f"Meta: {META_FREQ_QTD}")
                 
-                fig_count.update_layout(title=f"Frequência (Qtd Ocorrências) por Equipe", xaxis_title="Equipe", template=TEMPLATE_GRAFICO)
+                fig_count.update_layout(title=f"Linha 6", xaxis_title="Equipe", template=TEMPLATE_GRAFICO)
                 st.plotly_chart(fig_count, use_container_width=True)
 
             st.markdown("---")
