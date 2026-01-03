@@ -309,7 +309,9 @@ if file_prod and file_ret:
     tab1, tab2, tab3 = st.tabs(["📊 Resultados Consolidados", "🔍 Análise por Motivo", "💾 Dados Brutos"])
 
     with tab1:
-        st.subheader("📈 Indicadores Gerais Meta de 0.50%")
+        # Atualizei o título para mostrar a meta dinâmica escolhida no slider
+        st.subheader(f"📈 Indicadores Gerais (Meta de {META_PCT}%)")
+        
         c1, c2 = st.columns(2)
         with c1:
             st.info("**Linha 4 e 5**")
@@ -317,15 +319,31 @@ if file_prod and file_ret:
                 row = df_l45_completo[df_l45_completo['Equipe'] == 'Média Geral']
                 if not row.empty:
                     val = row['% Realizado'].values[0]
-                    st.metric("Resultado", f"{val:.2f}%", delta=f"{-1*val-META_PCT:.2f}% vs Meta", delta_color="inverse")
+                    
+                    # --- ALTERAÇÃO AQUI ---
+                    st.metric("Resultado", f"{val:.2f}%") # Removemos o delta numérico
+                    
+                    if val <= META_PCT:
+                        st.markdown(":green[**Dentro da Meta**]")
+                    else:
+                        st.markdown(":red[**Fora da Meta**]")
+                    # ----------------------
+
         with c2:
             st.info("**Linha 6**")
             if df_l6_completo is not None and not df_l6_completo.empty:
                 row = df_l6_completo[df_l6_completo['Equipe'] == 'Média Geral']
                 if not row.empty:
                     val = row['% Realizado'].values[0]
-                    st.metric("Resultado", f"{val:.2f}%", delta=f"{-1*val-META_PCT:.2f}% vs Meta", delta_color="inverse")
-
+                    
+                    # --- ALTERAÇÃO AQUI ---
+                    st.metric("Resultado", f"{val:.2f}%") # Removemos o delta numérico
+                    
+                    if val <= META_PCT:
+                        st.markdown(":green[**Dentro da Meta**]")
+                    else:
+                        st.markdown(":red[**Fora da Meta**]")
+                    # ----------------------
         st.markdown("---")
         st.subheader(f"📊 Performance Total (Meta: {META_PCT}%)")
         col_g1, col_g2 = st.columns(2)
