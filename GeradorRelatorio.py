@@ -309,7 +309,7 @@ if file_prod and file_ret:
     tab1, tab2, tab3 = st.tabs(["📊 Resultados Consolidados", "🔍 Análise por Motivo", "💾 Dados Brutos"])
 
     with tab1:
-        st.subheader("📈 Indicadores Gerais")
+        st.subheader("📈 Indicadores Gerais Meta de 0.50%")
         c1, c2 = st.columns(2)
         with c1:
             st.info("**Linha 4 e 5**")
@@ -317,14 +317,14 @@ if file_prod and file_ret:
                 row = df_l45_completo[df_l45_completo['Equipe'] == 'Média Geral']
                 if not row.empty:
                     val = row['% Realizado'].values[0]
-                    st.metric("Perda Média", f"{val:.2f}%", delta=f"{val-META_PCT:.2f}% vs Meta", delta_color="inverse")
+                    st.metric("Resultado", f"{val:.2f}%", delta=f"{-1*val-META_PCT:.2f}% vs Meta", delta_color="inverse")
         with c2:
             st.info("**Linha 6**")
             if df_l6_completo is not None and not df_l6_completo.empty:
                 row = df_l6_completo[df_l6_completo['Equipe'] == 'Média Geral']
                 if not row.empty:
                     val = row['% Realizado'].values[0]
-                    st.metric("Perda Média", f"{val:.2f}%", delta=f"{val-META_PCT:.2f}% vs Meta", delta_color="inverse")
+                    st.metric("Resultado", f"{val:.2f}%", delta=f"{-1*val-META_PCT:.2f}% vs Meta", delta_color="inverse")
 
         st.markdown("---")
         st.subheader(f"📊 Performance Total (Meta: {META_PCT}%)")
