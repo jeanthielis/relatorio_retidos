@@ -13,11 +13,46 @@ st.markdown("""
     <style>
         @media print {
             @page { size: landscape; margin: 0.5cm; }
-            [data-testid="stSidebar"], header, footer, [data-testid="stToolbar"], .stAppHeader, .stDeployButton { display: none !important; }
-            body { zoom: 65%; -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
-            .stApp { position: absolute; top: 0; left: 0; width: 100%; height: auto !important; overflow: visible !important; }
-            .main .block-container { max-width: 100% !important; padding: 0 !important; overflow: visible !important; }
+
+            [data-testid="stSidebar"], header, footer,
+            [data-testid="stToolbar"], .stAppHeader, .stDeployButton,
+            [data-testid="stStatusWidget"] { display: none !important; }
+
+            html, body { height: auto !important; overflow: visible !important; }
+
+            /* O Streamlit usa vários contêineres com altura fixa (100vh) e
+               overflow oculto/rolável para permitir a rolagem interna na tela.
+               Isso é o que estava cortando o conteúdo na impressão: o navegador
+               só "vê" o que cabia na área visível da tela. Aqui liberamos TODOS
+               os contêineres pai, não só .stApp / .block-container. */
+            #root, .stApp,
+            [data-testid="stAppViewContainer"],
+            [data-testid="stMain"],
+            [data-testid="stMainBlockContainer"],
+            [data-testid="stBottomBlockContainer"],
+            .main, .block-container {
+                position: static !important;
+                height: auto !important;
+                max-height: none !important;
+                min-height: 0 !important;
+                overflow: visible !important;
+                width: 100% !important;
+                max-width: 100% !important;
+                padding: 0 !important;
+                margin: 0 !important;
+            }
+
+            /* Evita que um gráfico seja partido ao meio entre duas páginas */
+            .js-plotly-plot, .stPlotlyChart, [data-testid="stVerticalBlock"] > div {
+                page-break-inside: avoid;
+                break-inside: avoid;
+            }
+
             .js-plotly-plot { max-width: 100% !important; }
+
+            /* "zoom" não é padrão e não funciona no Firefox (só Chrome/Edge).
+               Mantido apenas como reforço; a correção real é o reset acima. */
+            body { zoom: 65%; -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
         }
     </style>
 """, unsafe_allow_html=True)
